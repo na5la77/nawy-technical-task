@@ -1,8 +1,16 @@
-import {  IsEnum, IsInt, IsMongoId, IsNotEmpty, IsOptional, IsString, Min, ValidateNested } from "class-validator";
+import {
+  IsEnum,
+  IsInt,
+  IsMongoId,
+  IsNotEmpty,
+  IsOptional,
+  IsString,
+  Min,
+  ValidateNested,
+} from "class-validator";
 import { Type } from "class-transformer";
 import { UnitType } from "../../../listings/enums/unit-type.enum";
 import { LocationDto } from "./location.dto";
-
 
 export class CreateListingDto {
   @IsString()
@@ -31,12 +39,11 @@ export class CreateListingDto {
   @IsString()
   description?: string;
 
-  
   @Min(0)
   @IsInt()
   @IsNotEmpty()
   price: number;
-  
+
   @IsString()
   @IsNotEmpty()
   project: string;
@@ -45,13 +52,12 @@ export class CreateListingDto {
   @Type(() => LocationDto)
   @IsNotEmpty()
   location: LocationDto;
-  
 
   @IsOptional()
   @IsString({ each: true })
   images?: string[];
 
   @IsMongoId({ each: true })
-  @IsNotEmpty({message:"Features ID's are required"})
+  @IsNotEmpty({ message: "Features ID's are required" })
   features: string[];
 }

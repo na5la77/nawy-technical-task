@@ -18,15 +18,17 @@ import { GetAllListingsDto } from "../common/dtos/listings/get-all-listings-dto"
 export class ListingsService {
   constructor(
     @InjectModel(Listing.name) private readonly listingModel: Model<Listing>,
-    @InjectModel(Feature.name) private readonly featureModel: Model<Feature>
+    @InjectModel(Feature.name) private readonly featureModel: Model<Feature>,
   ) {}
 
   async createListing(createListingDto: CreateListingDto): Promise<Listing> {
     const { features, ...listingData } = createListingDto;
 
-    const featureObjects = await this.featureModel.find({ _id: { $in: features } }).exec();
+    const featureObjects = await this.featureModel
+      .find({ _id: { $in: features } })
+      .exec();
     if (featureObjects.length !== features.length) {
-      throw new BadRequestException('Some features do not exist');
+      throw new BadRequestException("Some features do not exist");
     }
 
     const newListing = new this.listingModel({
@@ -38,32 +40,36 @@ export class ListingsService {
       return await newListing.save();
     } catch (error) {
       if (error.code === 11000) {
-        throw new BadRequestException('A listing with this name already exists');
+        throw new BadRequestException(
+          "A listing with this name already exists",
+        );
       }
-      
-      throw new InternalServerErrorException('Failed to create listing');
+
+      throw new InternalServerErrorException("Failed to create listing");
     }
   }
 
   async findAll(
-      query: GetAllListingsDto,
-      page: number,
-      limit: number,
+    query: GetAllListingsDto,
+    page: number,
+    limit: number,
   ): Promise<GetAllListingsResponse> {
     const skip = (page - 1) * limit;
-    const filters = this.buildFilters(query)
+    const filters = this.buildFilters(query);
 
     const queryTransaction = this.listingModel
-        .find(filters)
-        .select('unit_name unit_number unit_type bedrooms bathrooms price location images project')
-        .skip(skip)
-        .limit(limit);
+      .find(filters)
+      .select(
+        "unit_name unit_number unit_type bedrooms bathrooms price location images project",
+      )
+      .skip(skip)
+      .limit(limit);
 
     const total = await this.listingModel.countDocuments(filters);
     const totalPages = Math.ceil(total / limit);
 
     const listings = await queryTransaction.exec();
-    const pagination: Pagination ={limit,page,total,totalPages}
+    const pagination: Pagination = { limit, page, total, totalPages };
 
     return { listings, pagination };
   }
@@ -75,13 +81,12 @@ export class ListingsService {
     return listing;
   }
 
- 
   private buildFilters(query: GetAllListingsDto): ListingsFilter {
     const filters: ListingsFilter = {};
     Object.entries(query).forEach(([key, value]) => {
       if (value) {
-         if (key === 'unit_name') {
-          filters[key] = new RegExp(value, 'i');
+        if (key === "unit_name") {
+          filters[key] = new RegExp(value, "i");
         } else {
           filters[key] = value;
         }

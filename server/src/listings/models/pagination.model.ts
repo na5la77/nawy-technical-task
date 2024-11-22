@@ -1,6 +1,6 @@
-export class Pagination{
-    page:number;
-    limit:number;
-    total:number;
-    totalPages:number;
+export class Pagination {
+  page: number;
+  limit: number;
+  total: number;
+  totalPages: number;
 }

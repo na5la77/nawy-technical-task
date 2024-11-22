@@ -1,16 +1,15 @@
-import {  Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { UnitType } from "../enums/unit-type.enum";
-import { Document } from 'mongoose';
+import { Document } from "mongoose";
 import { LocationDto } from "../../common/dtos/listings/location.dto";
 import { FeatureDto } from "../../common/dtos/listings/feature.dto";
 
-
 @Schema()
 export class Listing extends Document {
-  @Prop({ unique: true, required: true, lowercase: true  })
+  @Prop({ unique: true, required: true, lowercase: true })
   unit_name: string;
 
-  @Prop({required: true})
+  @Prop({ required: true })
   unit_number: string;
 
   @Prop({ enum: UnitType, required: true })
@@ -27,7 +26,7 @@ export class Listing extends Document {
 
   @Prop({ required: true, min: 0 })
   price: number;
-  @Prop({ required: true})
+  @Prop({ required: true })
   project: string;
 
   @Prop({
@@ -45,4 +44,3 @@ export class Listing extends Document {
 }
 
 export const ListingSchema = SchemaFactory.createForClass(Listing);
-

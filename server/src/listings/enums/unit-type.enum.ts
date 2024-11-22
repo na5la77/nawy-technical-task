@@ -1,6 +1,5 @@
 export enum UnitType {
-    "APARTMENT" = "Apartment",
-    "VILLA" = "Villa",
-    "DUPLEX" = "Duplex",
-  }
-  
+  "APARTMENT" = "Apartment",
+  "VILLA" = "Villa",
+  "DUPLEX" = "Duplex",
+}

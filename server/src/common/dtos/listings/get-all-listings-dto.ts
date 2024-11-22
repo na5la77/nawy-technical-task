@@ -1,5 +1,12 @@
-import {IsOptional, IsString, IsInt, Min, IsAlpha, IsEnum} from 'class-validator';
-import {UnitType} from "../../../listings/enums/unit-type.enum";
+import {
+  IsOptional,
+  IsString,
+  IsInt,
+  Min,
+  IsAlpha,
+  IsEnum,
+} from "class-validator";
+import { UnitType } from "../../../listings/enums/unit-type.enum";
 
 export class GetAllListingsDto {
   @IsOptional()
@@ -28,6 +35,4 @@ export class GetAllListingsDto {
   @IsInt()
   @Min(1)
   limit?: number;
-
- 
 }

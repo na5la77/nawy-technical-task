@@ -1,9 +1,8 @@
-import {UnitType} from "../enums/unit-type.enum";
+import { UnitType } from "../enums/unit-type.enum";
 
 export class ListingsFilter {
-    unit_name?: RegExp;
-    unit_number?: string; 
-    project?: string;
-    unit_type?: UnitType
-  }
-  
+  unit_name?: RegExp;
+  unit_number?: string;
+  project?: string;
+  unit_type?: UnitType;
+}
