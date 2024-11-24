@@ -19,6 +19,9 @@ export class Listing extends Document {
   @Prop({ required: true, min: 0 })
   bedrooms: number;
 
+  @Prop({ required: true, min: 20 })
+  size: number;
+
   @Prop({ required: true, min: 0 })
   bathrooms: number;
 

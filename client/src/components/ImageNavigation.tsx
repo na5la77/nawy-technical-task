@@ -43,13 +43,13 @@ export function ImageNavigation({ images }: ImageNavigationProps) {
                     {currentIndex + 1} / {images.length}
                 </div>
             </div>
-            <div className="flex overflow-x-auto pb-2 items-center justify-center bg-muted rounded-lg">
+            <div className="flex overflow-x-auto pb-2 items-center justify-center bg-muted rounded-lg  gap-4">
                 {images.map((image, index) => (
                     <button
                         key={index}
                         onClick={() => setCurrentIndex(index)}
                         className={cn(
-                            "flex-shrink-0 relative w-20 h-20 rounded-md mt-4 ml-4",
+                            "flex-shrink-0 relative w-20 h-20 rounded-md mt-4",
                             currentIndex === index && "ring-2 ring-primary ring-offset-2"
                         )}
                     >
