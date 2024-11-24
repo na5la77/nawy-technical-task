@@ -1,28 +1,31 @@
-'use client'
+"use client";
 
 import {
-    Pagination,
-    PaginationContent,
-    PaginationEllipsis,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
-} from "@/components/ui/pagination"
-import {usePathname, useRouter} from 'next/navigation'
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { usePathname, useRouter } from "next/navigation";
 
 interface PaginationControlsProps {
   currentPage: number;
   totalPages: number;
 }
 
-export function PaginationControls({ currentPage, totalPages }: PaginationControlsProps) {
-  const router = useRouter()
-  const pathname = usePathname()
+export function PaginationControls({
+  currentPage,
+  totalPages,
+}: PaginationControlsProps) {
+  const router = useRouter();
+  const pathname = usePathname();
 
   const handlePageChange = (page: number) => {
-    router.push(`${pathname}?page=${page}`)
-  }
+    router.push(`${pathname}?page=${page}`);
+  };
 
   const renderPageNumbers = () => {
     const pageNumbers = [];
@@ -32,33 +35,33 @@ export function PaginationControls({ currentPage, totalPages }: PaginationContro
       for (let i = 1; i <= totalPages; i++) {
         pageNumbers.push(
           <PaginationItem key={i}>
-            <PaginationLink 
-              href="#" 
+            <PaginationLink
+              href="#"
               onClick={(e) => {
-                e.preventDefault()
-                handlePageChange(i)
+                e.preventDefault();
+                handlePageChange(i);
               }}
               isActive={currentPage === i}
             >
               {i}
             </PaginationLink>
-          </PaginationItem>
+          </PaginationItem>,
         );
       }
     } else {
       pageNumbers.push(
         <PaginationItem key={1}>
-          <PaginationLink 
-            href="#" 
+          <PaginationLink
+            href="#"
             onClick={(e) => {
-              e.preventDefault()
-              handlePageChange(1)
+              e.preventDefault();
+              handlePageChange(1);
             }}
             isActive={currentPage === 1}
           >
             1
           </PaginationLink>
-        </PaginationItem>
+        </PaginationItem>,
       );
 
       if (currentPage > 3) {
@@ -66,20 +69,24 @@ export function PaginationControls({ currentPage, totalPages }: PaginationContro
       }
 
       // Show current page and one before and after
-      for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+      for (
+        let i = Math.max(2, currentPage - 1);
+        i <= Math.min(totalPages - 1, currentPage + 1);
+        i++
+      ) {
         pageNumbers.push(
           <PaginationItem key={i}>
-            <PaginationLink 
-              href="#" 
+            <PaginationLink
+              href="#"
               onClick={(e) => {
-                e.preventDefault()
-                handlePageChange(i)
+                e.preventDefault();
+                handlePageChange(i);
               }}
               isActive={currentPage === i}
             >
               {i}
             </PaginationLink>
-          </PaginationItem>
+          </PaginationItem>,
         );
       }
 
@@ -89,47 +96,46 @@ export function PaginationControls({ currentPage, totalPages }: PaginationContro
 
       pageNumbers.push(
         <PaginationItem key={totalPages}>
-          <PaginationLink 
-            href="#" 
+          <PaginationLink
+            href="#"
             onClick={(e) => {
-              e.preventDefault()
-              handlePageChange(totalPages)
+              e.preventDefault();
+              handlePageChange(totalPages);
             }}
             isActive={currentPage === totalPages}
           >
             {totalPages}
           </PaginationLink>
-        </PaginationItem>
+        </PaginationItem>,
       );
     }
 
     return pageNumbers;
-  }
+  };
 
   return (
     <Pagination>
       <PaginationContent>
         <PaginationItem>
-          <PaginationPrevious 
-            href="#" 
+          <PaginationPrevious
+            href="#"
             onClick={(e) => {
-              e.preventDefault()
-              if (currentPage > 1) handlePageChange(currentPage - 1)
-            }} 
+              e.preventDefault();
+              if (currentPage > 1) handlePageChange(currentPage - 1);
+            }}
           />
         </PaginationItem>
         {renderPageNumbers()}
         <PaginationItem>
-          <PaginationNext 
-            href="#" 
+          <PaginationNext
+            href="#"
             onClick={(e) => {
-              e.preventDefault()
-              if (currentPage < totalPages) handlePageChange(currentPage + 1)
-            }} 
+              e.preventDefault();
+              if (currentPage < totalPages) handlePageChange(currentPage + 1);
+            }}
           />
         </PaginationItem>
       </PaginationContent>
     </Pagination>
-  )
+  );
 }
-
