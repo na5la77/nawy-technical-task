@@ -3,6 +3,7 @@ import { UnitType } from "../enums/unit-type.enum";
 import { Document } from "mongoose";
 import { LocationDto } from "../../common/dtos/listings/location.dto";
 import { FeatureDto } from "../../common/dtos/listings/feature.dto";
+import { UserDto } from "../../common/dtos/listings/user.dto";
 
 @Schema()
 export class Listing extends Document {
@@ -26,8 +27,6 @@ export class Listing extends Document {
 
   @Prop({ required: true, min: 0 })
   price: number;
-  @Prop({ required: true })
-  project: string;
 
   @Prop({
     type: LocationDto,
@@ -41,6 +40,11 @@ export class Listing extends Document {
 
   @Prop({ type: [FeatureDto], _id: false })
   features: FeatureDto[];
+
+  @Prop({ type: String, required: true })
+  project: string;
+  @Prop({ type: UserDto, _id: false })
+  user: UserDto;
 }
 
 export const ListingSchema = SchemaFactory.createForClass(Listing);

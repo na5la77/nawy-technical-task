@@ -3,7 +3,9 @@ import { ListingsService } from "./listings.service";
 import { CreateListingDto } from "../common/dtos/listings/create-listing.dto";
 import { GetAllListingsDto } from "../common/dtos/listings/get-all-listings-dto";
 import { IdValidationDto } from "../common/dtos/listings/id-validation.dto";
+import { ApiTags } from "@nestjs/swagger";
 
+@ApiTags("Listings")
 @Controller("listings")
 export class ListingsController {
   constructor(private readonly listingsService: ListingsService) {}
@@ -15,8 +17,7 @@ export class ListingsController {
 
   @Get()
   async getAllListings(@Query() query: GetAllListingsDto) {
-    const { page = 1, limit = 10 } = query;
-    return this.listingsService.findAll(query, page, limit);
+    return this.listingsService.findAll(query);
   }
 
   @Get(":id")

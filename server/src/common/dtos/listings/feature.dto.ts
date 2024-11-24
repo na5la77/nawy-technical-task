@@ -1,9 +1,8 @@
-import { IsString, IsNotEmpty, IsAlpha } from "class-validator";
+import { IsNotEmpty, IsString } from "class-validator";
 
 export class FeatureDto {
   @IsString()
   @IsNotEmpty()
-  @IsAlpha()
   name: string;
 
   @IsString()

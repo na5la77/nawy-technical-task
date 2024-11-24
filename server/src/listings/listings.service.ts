@@ -49,30 +49,40 @@ export class ListingsService {
     }
   }
 
-  async findAll(
-    query: GetAllListingsDto,
-    page: number,
-    limit: number,
-  ): Promise<GetAllListingsResponse> {
-    const skip = (page - 1) * limit;
-    const filters = this.buildFilters(query);
+  async findAll(query: GetAllListingsDto): Promise<GetAllListingsResponse> {
+    const parsedPage = parseInt(query.page, 10) || 1;
+    const parsedLimit = parseInt(query.limit, 10) || 10;
 
-    const queryTransaction = this.listingModel
-      .find(filters)
-      .select(
-        "unit_name unit_number unit_type bedrooms bathrooms price location images project",
-      )
-      .skip(skip)
-      .limit(limit);
+    const skip = (parsedPage - 1) * parsedLimit;
+    const filterQuery = { ...query };
+    delete filterQuery.page;
+    delete filterQuery.limit;
+    const filters = this.buildFilters(filterQuery);
 
-    const total = await this.listingModel.countDocuments(filters);
-    const totalPages = Math.ceil(total / limit);
+    const [listings, total] = await Promise.all([
+      this.listingModel
+        .find(filters)
+        .select(
+          "unit_name unit_number unit_type bedrooms bathrooms price location images project",
+        )
+        .skip(skip)
+        .limit(parsedLimit)
+        .exec(),
+      this.listingModel.countDocuments(filters),
+    ]);
 
-    const listings = await queryTransaction.exec();
-    const pagination: Pagination = { limit, page, total, totalPages };
+    const totalPages = Math.ceil(total / parsedLimit);
+
+    const pagination: Pagination = {
+      limit: parsedLimit,
+      page: parsedPage,
+      total,
+      totalPages,
+    };
 
     return { listings, pagination };
   }
+
   async findOne(id: string): Promise<Listing> {
     const listing = await this.listingModel.findById(id).exec();
     if (!listing) {
@@ -84,13 +94,7 @@ export class ListingsService {
   private buildFilters(query: GetAllListingsDto): ListingsFilter {
     const filters: ListingsFilter = {};
     Object.entries(query).forEach(([key, value]) => {
-      if (value) {
-        if (key === "unit_name") {
-          filters[key] = new RegExp(value, "i");
-        } else {
-          filters[key] = value;
-        }
-      }
+      filters[key] = new RegExp(value, "i");
     });
     return filters;
   }
