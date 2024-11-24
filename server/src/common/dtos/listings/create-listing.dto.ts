@@ -66,6 +66,16 @@ export class CreateListingDto {
   @Min(1)
   @IsNotEmpty()
   bathrooms: number;
+  @ApiProperty({
+    required: true,
+    description: "The size in m^2 of the listing",
+    type: "number",
+    minimum: 20,
+  })
+  @IsInt()
+  @Min(20)
+  @IsNotEmpty()
+  size: number;
 
   @ApiProperty({
     required: false,
@@ -80,7 +90,7 @@ export class CreateListingDto {
 
   @ApiProperty({
     required: true,
-    description: "The number of bathrooms of the listing",
+    description: "The price of the listing",
     type: "number",
     minimum: 1,
   })
