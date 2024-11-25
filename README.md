@@ -9,7 +9,8 @@ The API documentation is available through Swagger. Once the backend server is r
 ## Getting Started
 
 ### Without Docker
-To run the application locally without Docker, ensure that the Docker environment variable is set to `FALSE` in the frontend configuration. After that, follow these steps:
+To run the application locally without Docker, ensure that the Docker environment variable is set to `FALSE` in the client configuration file (.env).
+After that, follow these steps:
 
 1. Clone this repository.
 2. Navigate to the frontend and backend directories and install dependencies:
@@ -24,7 +25,7 @@ To run the application locally without Docker, ensure that the Docker environmen
 
 To run the application locally using Docker, follow these steps:
 
-1. Set the Docker environment variable to `TRUE` in the frontend configuration file.
+1. Set the Docker environment variable to `TRUE` in the client configuration file (.env).
 2. Then run the following command:
    ```bash
    docker-compose up --build

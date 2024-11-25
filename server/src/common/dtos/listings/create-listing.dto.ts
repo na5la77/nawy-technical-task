@@ -121,12 +121,15 @@ export class CreateListingDto {
 
   @ApiProperty({
     required: false,
-    description: "The images of the listing",
+    description: "The images of the listing should be from one of the following domains (domains: ['i.ibb.co','iili.io'])",
     type: [String],
     example: [
       "https://i.ibb.co/VWjXSPg/bloomfields-1.png",
       "https://i.ibb.co/2cqq5Rb/bloomfields-2.png",
       "https://i.ibb.co/DC3fTCD/bloomfields-3.png",
+      "https://iili.io/2aRrifR.jpg",
+      "https://iili.io/2aRgkjs.jpg",
+      "https://iili.io/2aRgeun.jpg"
     ],
   })
   @IsOptional()

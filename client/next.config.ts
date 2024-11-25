@@ -6,12 +6,8 @@ const nextConfig = {
         ignoreBuildErrors:true
     },
     reactStrictMode: false,
-    // images: {
-    //    domains:["i.ibb.co","iili.io"]
-    //
-    // },
     images: {
-        domains: ['i.ibb.co','iili.io'], // Allow all domains
+        domains: ['i.ibb.co','iili.io'],
     },
     redirects: async () => {
         return [
