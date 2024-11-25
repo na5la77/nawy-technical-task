@@ -21,7 +21,9 @@ export default async function ListingPage({
 }: {
   params: { id: string };
 }) {
-  const listing = await fetchListing(params.id);
+  const { id } = await params;
+
+  const listing = await fetchListing(id);
 
   return (
     <div className="container mx-auto py-8 px-4 sm:px-6 lg:px-8">

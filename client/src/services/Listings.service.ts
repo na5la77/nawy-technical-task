@@ -24,25 +24,25 @@ export async function getListings(
     ),
   });
 
-  const response = await fetch(`${API_URL}/listings?${queryParams}`);
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/listings?${queryParams}`,
+  );
 
   if (!response.ok) {
-    throw new Error("Failed to fetch listings");
+    throw new Error(`Failed to fetch listings: ${response.statusText}`);
   }
 
   return response.json();
 }
 
 export async function getListing(id: string): Promise<ListingDetailsResponse> {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/listings/${id}`,
-  );
+  const response = await fetch(`${API_URL}/listings/${id}`);
 
   if (!response.ok) {
     if (response.status === 404) {
       throw new Error("Listing not found");
     }
-    throw new Error("Failed to fetch listing");
+    throw new Error(`Failed to fetch listing: ${response.statusText}`);
   }
 
   return response.json();

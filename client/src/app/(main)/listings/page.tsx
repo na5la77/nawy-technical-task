@@ -16,10 +16,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ListingsFilter } from "@/types/interfaces/ListingFilter.interface";
 import { UnitType } from "@/types/enums/UnitTypes.enum";
 import { getListings } from "@/services/Listings.service";
-//TODO: Database data
-//TODO: check linting errors
-//TODO: Check backend error message in response
-//TODO: README files
+
 export default function ListingsPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -54,7 +51,7 @@ export default function ListingsPage() {
     setError(null);
     try {
       const cleanFilters: ListingsFilter = Object.fromEntries(
-        Object.entries(filters).filter(([_, v]) => v !== "" && v !== undefined),
+        Object.entries(filters).filter(([, v]) => v !== "" && v !== undefined),
       ) as ListingsFilter;
 
       const response = await getListings(page, limit, cleanFilters);
@@ -66,7 +63,7 @@ export default function ListingsPage() {
       const { listings, pagination } = response;
       setListings(listings);
       setPagination(pagination);
-    } catch (error: any) {
+    } catch (error) {
       console.error(
         "Error fetching listings:",
         error?.message || error,

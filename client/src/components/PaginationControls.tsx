@@ -9,7 +9,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 interface PaginationControlsProps {
   currentPage: number;
@@ -22,9 +22,12 @@ export function PaginationControls({
 }: PaginationControlsProps) {
   const router = useRouter();
   const pathname = usePathname();
+  const searchParams = useSearchParams();
 
   const handlePageChange = (page: number) => {
-    router.push(`${pathname}?page=${page}`);
+    const params = new URLSearchParams(searchParams);
+    params.set("page", page.toString());
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   const renderPageNumbers = () => {
