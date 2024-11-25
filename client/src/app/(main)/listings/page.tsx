@@ -80,10 +80,22 @@ export default function ListingsPage() {
   }, [fetchListings]);
 
   const handleFilterChange = (name: keyof ListingsFilter, value: string) => {
-    setFilters((prev) => ({
-      ...prev,
+    const newFilters = {
+      ...filters,
       [name]: value === "All" ? undefined : value,
-    }));
+    };
+    setFilters(newFilters);
+
+    const params = new URLSearchParams(searchParams);
+    Object.entries(newFilters).forEach(([key, value]) => {
+      if (value) {
+        params.set(key, value);
+      } else {
+        params.delete(key);
+      }
+    });
+    params.set("page", "1");
+    router.push(`/listings?${params.toString()}`);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -94,8 +106,10 @@ export default function ListingsPage() {
         params.append(key, value);
       }
     });
+    params.set("page", "1");
     router.push(`/listings?${params.toString()}`);
   };
+
 
   return (
     <div className="container mx-auto py-8 px-4 sm:px-6 lg:px-8">
